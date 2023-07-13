@@ -13,6 +13,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TransferenciaService implements ITransferenciaService {
@@ -39,5 +41,12 @@ public class TransferenciaService implements ITransferenciaService {
             Page<Transferencia> lista = repository.findAll(pageRequest);
             return lista.map(TransferenciaResponse::converter);
         }
+    }
+
+    @Override
+    public List<TransferenciaResponse> buscarTransferenciasPorData(LocalDateTime dataInicio, LocalDateTime dataFim) {
+        List<Transferencia> transferencias = repository.buscarPorData(dataInicio, dataFim);
+        System.out.println(dataInicio);
+        return transferencias.stream().map(TransferenciaResponse::converter).collect(Collectors.toList());
     }
 }

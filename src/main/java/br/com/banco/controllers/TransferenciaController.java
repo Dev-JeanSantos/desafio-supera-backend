@@ -15,6 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/banco/transferencias")
@@ -22,7 +23,6 @@ public class TransferenciaController {
     @Autowired
     private TransferenciaService service;
 
-    @PostMapping()
     public ResponseEntity<TransferenciaRequest> criarTransferencia(@Valid @RequestBody TransferenciaRequest request){
         request.setDataTransferencia(LocalDateTime.now());
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
@@ -41,6 +41,15 @@ public class TransferenciaController {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy );
         Page<TransferenciaResponse> list = service.buscarTransferenciasPaginados(nomeOperadorTransacao, pageRequest);
         return ResponseEntity.ok().body(list);
+    }
+
+    @GetMapping("/consultas")
+    public ResponseEntity<List<TransferenciaResponse>> buscarConsultaPorData(
+            @RequestParam(name = "dataInicio", required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataInicio,
+            @RequestParam(name = "dataFim", required=false)@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataFim) {
+        List<TransferenciaResponse> transferenciaResponses = service.buscarTransferenciasPorData(dataInicio, dataFim);
+
+        return ResponseEntity.ok().body(transferenciaResponses);
     }
 
 }
