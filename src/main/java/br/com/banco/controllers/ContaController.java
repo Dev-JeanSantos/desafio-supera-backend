@@ -14,7 +14,7 @@ import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/api/v1/banco/conta")
+@RequestMapping("/api/v1/banco/contas")
 public class ContaController {
     @Autowired
     private ContaService service;

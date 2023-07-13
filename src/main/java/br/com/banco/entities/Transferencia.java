@@ -1,6 +1,7 @@
 package br.com.banco.entities;
 
 import br.com.banco.dtos.requesties.TransferenciaRequest;
+import br.com.banco.dtos.responses.TransferenciaResponse;
 import br.com.banco.enums.Tipo;
 import lombok.*;
 
@@ -19,7 +20,7 @@ public class Transferencia {
     private Integer id;
     private LocalDateTime dataTransferencia;
     private double valor;
-
+    @Enumerated(EnumType.STRING)
     private Tipo tipo;
 
     private String nomeOperadorTransacao;
@@ -36,6 +37,17 @@ public class Transferencia {
         transferencia.setValor(transferenciaRequest.getValor());
         transferencia.setTipo(transferenciaRequest.getTipo());
         transferencia.setNomeOperadorTransacao(transferenciaRequest.getNomeOperadorTransacao());
+        transferencia.setConta(conta);
+
+        return transferencia;
+    }
+
+    public static Transferencia transferenciaResponse(TransferenciaResponse transferenciaResponse, Conta conta) {
+        Transferencia transferencia = new Transferencia();
+        transferencia.setDataTransferencia(transferenciaResponse.getDataTransferencia());
+        transferencia.setValor(transferenciaResponse.getValor());
+        transferencia.setTipo(transferenciaResponse.getTipo());
+        transferencia.setNomeOperadorTransacao(transferenciaResponse.getNomeOperadorTransacao());
         transferencia.setConta(conta);
 
         return transferencia;

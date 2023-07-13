@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -22,7 +20,6 @@ public class TransferenciaRequest {
     private LocalDateTime dataTransferencia;
     @NotNull
     private double valor;
-    @Enumerated(EnumType.STRING)
     private Tipo tipo;
     @NotBlank
     private String nomeOperadorTransacao;
