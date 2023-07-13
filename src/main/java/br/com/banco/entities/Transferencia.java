@@ -1,22 +1,44 @@
 package br.com.banco.entities;
 
+import br.com.banco.dtos.requesties.TransferenciaRequest;
 import br.com.banco.enums.Tipo;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.time.LocalDate;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Entity
 public class Transferencia {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private LocalDate dataTransferencia;
+    private LocalDateTime dataTransferencia;
     private double valor;
-    private Enum<Tipo> tipo;
+
+    private Tipo tipo;
+
     private String nomeOperadorTransacao;
+
+    @OneToOne
+    @JoinColumn(name = "conta_id")
     private Conta conta;
+
+
+    public static Transferencia transferenciaRequest(TransferenciaRequest transferenciaRequest, Conta conta) {
+        Transferencia transferencia = new Transferencia();
+        transferencia.setId(transferenciaRequest.getId());
+        transferencia.setDataTransferencia(transferenciaRequest.getDataTransferencia());
+        transferencia.setValor(transferenciaRequest.getValor());
+        transferencia.setTipo(transferenciaRequest.getTipo());
+        transferencia.setNomeOperadorTransacao(transferenciaRequest.getNomeOperadorTransacao());
+        transferencia.setConta(conta);
+
+        return transferencia;
+    }
+
 }

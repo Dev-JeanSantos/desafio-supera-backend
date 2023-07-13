@@ -5,7 +5,6 @@ import br.com.banco.services.impl.ContaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +28,7 @@ public class ContaController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ContaRequest>> findAllPaged(
+    public ResponseEntity<Page<ContaRequest>> buscarTodasContasPaginadas(
 
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
