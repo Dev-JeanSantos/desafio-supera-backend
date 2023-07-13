@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -31,8 +32,6 @@ public class TransferenciaController {
 
     @GetMapping
     public ResponseEntity<Page<TransferenciaResponse>> buscarTodasTransferenciasPaginadas(
-            @RequestParam(value = "dataInicio", defaultValue = "") LocalDateTime dataInicio,
-            @RequestParam(value = "dataFim", defaultValue = "") LocalDateTime dataFim,
             @RequestParam(value = "nomeOperadorTransacao", defaultValue = "") String nomeOperadorTransacao,
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
@@ -40,7 +39,7 @@ public class TransferenciaController {
             @RequestParam(value = "orderBy", defaultValue = "id") String orderBy
     ){
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy );
-        Page<TransferenciaResponse> list = service.buscarTransferenciasPaginados(dataInicio, dataFim, nomeOperadorTransacao, pageRequest);
+        Page<TransferenciaResponse> list = service.buscarTransferenciasPaginados(nomeOperadorTransacao, pageRequest);
         return ResponseEntity.ok().body(list);
     }
 

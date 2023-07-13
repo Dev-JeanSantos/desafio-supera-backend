@@ -11,6 +11,6 @@ public interface ITransferenciaService {
 
     public TransferenciaRequest save (TransferenciaRequest request);
 
-    Page<TransferenciaResponse> buscarTransferenciasPaginados(LocalDateTime dataInicio, LocalDateTime dataFim, String nomeOperadorTransacao, PageRequest pageRequest);
+    Page<TransferenciaResponse> buscarTransferenciasPaginados(String nomeOperadorTransacao, PageRequest pageRequest);
 
 }

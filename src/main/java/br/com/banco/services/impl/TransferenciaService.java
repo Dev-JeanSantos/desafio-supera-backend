@@ -31,13 +31,10 @@ public class TransferenciaService implements ITransferenciaService {
     }
 
     @Override
-    public Page<TransferenciaResponse> buscarTransferenciasPaginados(LocalDateTime dataInicio, LocalDateTime dataFim, String nomeOperadorTransacao, PageRequest pageRequest) {
+    public Page<TransferenciaResponse> buscarTransferenciasPaginados(String nomeOperadorTransacao, PageRequest pageRequest) {
         if (!nomeOperadorTransacao.isEmpty()) {
             Page<Transferencia> lista = repository.buscarPorFiltros(nomeOperadorTransacao, pageRequest);
             return lista.map(TransferenciaResponse::converter);
-        } else if (!dataFim.equals(null)) {
-            System.out.println("tem data");
-            return null;
         } else {
             Page<Transferencia> lista = repository.findAll(pageRequest);
             return lista.map(TransferenciaResponse::converter);
